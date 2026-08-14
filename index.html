@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Flower Studio ✨ - Góc Sáng Tạo Hoa Dành Riêng Cho Cậu 🌸</title>
+  <meta name="description" content="Studio thiết kế hoa tương tác dành riêng cho bạn: tự tay phối màu, chỉnh cánh, chèn ảnh kỷ niệm và tạo nên những tấm thiệp Polaroid độc nhất vô nhị.">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css?v=1.3">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Mobile Sidebar Backdrop Overlay -->
+    <div class="sidebar-backdrop hidden" id="sidebar-backdrop"></div>
+
+    <!-- Ambient Dreamy Glows -->
+    <div class="ambient-glow glow-1"></div>
+    <div class="ambient-glow glow-2"></div>
+    <div class="ambient-glow glow-3"></div>
+
+    <!-- Top Navigation / Header -->
+    <header class="top-nav glass-panel">
+      <div class="brand">
+        <!-- Mobile Sidebar Toggle Button -->
+        <button class="mobile-controls-btn icon-btn" id="btn-mobile-controls" title="Mở bộ điều chỉnh hoa" aria-label="Mở bộ điều chỉnh hoa">
+          <span style="font-size: 1.1rem;">🎛️</span>
+        </button>
+
+        <!-- User / Crush Avatar Circle if uploaded -->
+        <div class="brand-avatar-wrapper" id="btn-open-name-modal" title="Nhấn để đổi tên & ảnh đại diện">
+          <img id="header-avatar-img" class="brand-avatar-img hidden" src="" alt="Avatar">
+          <div class="brand-icon bounce-hover" id="header-avatar-placeholder">
+            <span class="flower-symbol">🌸</span>
+          </div>
+        </div>
+
+        <div class="brand-text">
+          <div class="brand-title-row">
+            <h1 id="header-crush-title">Góc Sáng Tạo Của Cậu</h1>
+            <button class="badge-custom" id="btn-badge-name" title="Chỉnh sửa tên & ảnh">
+              <span class="sparkle">✨</span>
+              <span id="badge-crush-name">Dành Cho Cậu</span>
+              <span class="edit-pen">✏️</span>
+            </button>
+          </div>
+          <span class="sub-badge">Custom DIY Flower Studio 🎨</span>
+        </div>
+      </div>
+
+      <!-- Mode Selector Tabs -->
+      <div class="mode-tabs">
+        <button class="mode-tab active" data-mode="studio" id="btn-mode-studio">
+          <span class="tab-icon">🎨</span>
+          <span>Tự Tay Thiết Kế</span>
+        </button>
+        <button class="mode-tab" data-mode="garden" id="btn-mode-garden">
+          <span class="tab-icon">🌸</span>
+          <span>Khu Vườn Tự Do</span>
+        </button>
+        <button class="mode-tab" data-mode="brush" id="btn-mode-brush">
+          <span class="tab-icon">🪄</span>
+          <span>Bút Vẽ Thần Kỳ</span>
+        </button>
+        <button class="mode-tab" data-mode="tutorial" id="btn-mode-tutorial">
+          <span class="tab-icon">📖</span>
+          <span>Bí Kíp Vẽ Hoa</span>
+        </button>
+      </div>
+
+      <!-- Top Action Buttons -->
+      <div class="top-actions">
+        <!-- Flower Fortune Button -->
+        <button class="btn btn-fortune" id="btn-flower-fortune" title="Xem thông điệp may mắn & loài hoa hôm nay của cậu">
+          <span class="fortune-icon">🔮</span>
+          <span class="btn-text">Bói Hoa Hôm Nay</span>
+        </button>
+
+        <!-- Surprise Bloom Show Button -->
+        <button class="btn btn-surprise" id="btn-surprise-bloom" title="Một điều bất ngờ nhỏ tặng cậu!">
+          <span class="surprise-icon">✨</span>
+          <span class="btn-text">Bất Ngờ Nhỏ</span>
+        </button>
+
+        <!-- Secret Dev Note Button -->
+        <button class="btn-dev-note" id="btn-open-note" title="Mảnh giấy nhắn gửi cậu">
+          <span class="note-icon">💌</span>
+          <span class="note-label">Lời Nhắn</span>
+          <span class="note-badge-dot"></span>
+        </button>
+
+        <!-- Relaxing Ambient Music Toggle -->
+        <button class="icon-btn" id="btn-toggle-bgm" title="Bật/Tắt Nhạc thư giãn Lo-Fi">
+          <svg id="bgm-icon-on" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M9 18V5l12-2v13"></path>
+            <circle cx="6" cy="18" r="3"></circle>
+            <circle cx="18" cy="16" r="3"></circle>
+          </svg>
+          <svg id="bgm-icon-off" class="hidden" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M9 18V5l12-2v13"></path>
+            <circle cx="6" cy="18" r="3"></circle>
+            <circle cx="18" cy="16" r="3"></circle>
+            <line x1="1" y1="1" x2="23" y2="23"></line>
+          </svg>
+        </button>
+
+        <!-- Falling Petals Rain Toggle -->
+        <button class="icon-btn active-tint" id="btn-toggle-petals" title="Bật/Tắt Cánh Hoa Rơi">
+          <span style="font-size: 16px;">🌸</span>
+        </button>
+
+        <!-- Clear Canvas -->
+        <button class="icon-btn" id="btn-clear-canvas" title="Xóa màn hình để vẽ lại">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="3 6 5 6 21 6"></polyline>
+            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+          </svg>
+        </button>
+
+        <!-- Open Polaroid Creator Modal Button -->
+        <button class="btn btn-primary" id="btn-open-polaroid-modal" title="Tạo thiệp ảnh Polaroid xinh xắn chèn ảnh của cậu">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+            <circle cx="8.5" cy="8.5" r="1.5"></circle>
+            <polyline points="21 15 16 10 5 21"></polyline>
+          </svg>
+          <span class="cta-text">Tạo Thiệp</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Workspace -->
+    <main class="main-workspace">
+      <!-- Left Sidebar: Controls -->
+      <aside class="sidebar glass-panel" id="sidebar">
+        <!-- Mobile Sidebar Close Header -->
+        <div class="mobile-sidebar-header">
+          <div class="section-title">
+            <span class="icon">🎛️</span>
+            <h3>Xưởng Tùy Chỉnh Hoa</h3>
+          </div>
+          <button class="letter-close-btn" id="btn-close-sidebar-mobile" title="Đóng">✕</button>
+        </div>
+
+        <!-- Preset Inspiration Section -->
+        <div class="panel-section">
+          <div class="section-title">
+            <span class="icon">🌿</span>
+            <h3>Mẫu Gợi Ý Sáng Tạo</h3>
+          </div>
+          <div class="preset-grid">
+            <button class="preset-card active" data-preset="cherry_blossom">
+              <span class="preset-emoji">🌸</span>
+              <div class="preset-info">
+                <span class="preset-name">Anh Đào Nhật</span>
+                <span class="preset-tag">Dịu dàng</span>
+              </div>
+            </button>
+            <button class="preset-card" data-preset="sunflower">
+              <span class="preset-emoji">🌻</span>
+              <div class="preset-info">
+                <span class="preset-name">Hướng Dương</span>
+                <span class="preset-tag">Rực rỡ</span>
+              </div>
+            </button>
+            <button class="preset-card" data-preset="rose">
+              <span class="preset-emoji">🌹</span>
+              <div class="preset-info">
+                <span class="preset-name">Hoa Hồng Đỏ</span>
+                <span class="preset-tag">Kiêu kỳ</span>
+              </div>
+            </button>
+            <button class="preset-card" data-preset="tulip">
+              <span class="preset-emoji">🌷</span>
+              <div class="preset-info">
+                <span class="preset-name">Tulip Hà Lan</span>
+                <span class="preset-tag">Thanh lịch</span>
+              </div>
+            </button>
+            <button class="preset-card" data-preset="daisy">
+              <span class="preset-emoji">🌼</span>
+              <div class="preset-info">
+                <span class="preset-name">Cúc Họa Mi</span>
+                <span class="preset-tag">Trong trẻo</span>
+              </div>
+            </button>
+            <button class="preset-card" data-preset="glow_lotus">
+              <span class="preset-emoji">✨</span>
+              <div class="preset-info">
+                <span class="preset-name">Sen Dạ Quang</span>
+                <span class="preset-tag">Huyền ảo</span>
+              </div>
+            </button>
+          </div>
+        </div>
+
+        <!-- Custom Controls Section -->
+        <div class="panel-section" id="custom-controls">
+          <div class="section-title">
+            <span class="icon">🎛️</span>
+            <h3>Xưởng Điêu Khắc Cánh Hoa</h3>
+          </div>
+
+          <!-- Petal Shape Type -->
+          <div class="control-group">
+            <div class="control-label">
+              <span>Kiểu dáng cánh hoa</span>
+            </div>
+            <div class="segmented-control">
+              <button class="seg-btn active" data-shape="heart">🌸 Trái tim</button>
+              <button class="seg-btn" data-shape="rounded">🌼 Bầu tròn</button>
+              <button class="seg-btn" data-shape="pointed">🪷 Vuốt nhọn</button>
+              <button class="seg-btn" data-shape="swirl">🌹 Xoáy cuộn</button>
+            </div>
+          </div>
+
+          <!-- Petals Count -->
+          <div class="control-group">
+            <div class="control-label">
+              <span>Số lượng cánh hoa</span>
+              <span class="control-val" id="val-petal-count">5</span>
+            </div>
+            <input type="range" id="input-petal-count" min="3" max="32" value="5" class="range-slider">
+          </div>
+
+          <!-- Petal Layers -->
+          <div class="control-group">
+            <div class="control-label">
+              <span>Số tầng lớp cánh đan xen</span>
+              <span class="control-val" id="val-layers">1</span>
+            </div>
+            <input type="range" id="input-layers" min="1" max="5" value="1" class="range-slider">
+          </div>
+
+          <!-- Petal Length / Size -->
+          <div class="control-group">
+            <div class="control-label">
+              <span>Độ dài cánh hoa</span>
+              <span class="control-val" id="val-petal-size">68</span>
+            </div>
+            <input type="range" id="input-petal-size" min="25" max="150" value="68" class="range-slider">
+          </div>
+
+          <!-- Petal Curvature / Width -->
+          <div class="control-group">
+            <div class="control-label">
+              <span>Độ cong & bề ngang cánh</span>
+              <span class="control-val" id="val-petal-width">44</span>
+            </div>
+            <input type="range" id="input-petal-width" min="10" max="90" value="44" class="range-slider">
+          </div>
+
+          <!-- Color Customizer -->
+          <div class="control-group">
+            <div class="control-label">
+              <span>Bảng màu pha chế (Gradients)</span>
+            </div>
+            <div class="color-pickers-row">
+              <div class="color-item">
+                <label>Gốc cánh</label>
+                <div class="color-input-wrapper">
+                  <input type="color" id="input-color-petal-base" value="#fb7185">
+                </div>
+              </div>
+              <div class="color-item">
+                <label>Ngọn cánh</label>
+                <div class="color-input-wrapper">
+                  <input type="color" id="input-color-petal-tip" value="#ffe4e6">
+                </div>
+              </div>
+              <div class="color-item">
+                <label>Nhụy hoa</label>
+                <div class="color-input-wrapper">
+                  <input type="color" id="input-color-center" value="#fbbf24">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Quick Aesthetic Color Palette Presets -->
+          <div class="control-group">
+            <div class="control-label">
+              <span>Phối màu nhanh theo gu</span>
+            </div>
+            <div class="quick-palettes">
+              <button class="palette-chip" data-palette="sakura" title="Hồng Pastel" style="background: linear-gradient(135deg, #fb7185, #ffe4e6);"></button>
+              <button class="palette-chip" data-palette="sunset" title="Hoàng Hôn Cam Vàng" style="background: linear-gradient(135deg, #ea580c, #fde047);"></button>
+              <button class="palette-chip" data-palette="lavender" title="Tím Oải Hương" style="background: linear-gradient(135deg, #7c3aed, #e9d5ff);"></button>
+              <button class="palette-chip" data-palette="mint" title="Xanh Ngọc Bích" style="background: linear-gradient(135deg, #059669, #a7f3d0);"></button>
+              <button class="palette-chip" data-palette="midnight" title="Dạ Quang Neon" style="background: linear-gradient(135deg, #06b6d4, #f43f5e);"></button>
+            </div>
+          </div>
+
+          <!-- Options Toggles -->
+          <div class="control-group toggles-group">
+            <label class="toggle-item">
+              <input type="checkbox" id="toggle-stem" checked>
+              <span class="toggle-slider"></span>
+              <span class="toggle-text">Vẽ thân & lá cây tự nhiên</span>
+            </label>
+            <label class="toggle-item">
+              <input type="checkbox" id="toggle-glow" checked>
+              <span class="toggle-slider"></span>
+              <span class="toggle-text">Hiệu ứng phát sáng & phấn hoa bay</span>
+            </label>
+            <label class="toggle-item">
+              <input type="checkbox" id="toggle-bloom-anim" checked>
+              <span class="toggle-slider"></span>
+              <span class="toggle-text">Hiệu ứng nở hoa sinh động</span>
+            </label>
+            <label class="toggle-item">
+              <input type="checkbox" id="toggle-cute-quotes" checked>
+              <span class="toggle-slider"></span>
+              <span class="toggle-text">Hiện lời khen & thông điệp vui khi vẽ ✨</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Studio Mode Center Action Button -->
+        <div class="panel-section" id="section-studio-action">
+          <button class="btn btn-bloom w-100" id="btn-draw-center">
+            <span>✨ Nở Hoa Mới Ở Giữa</span>
+          </button>
+          <button class="btn btn-secondary w-100 btn-randomize" id="btn-randomize-flower" title="Gieo một bông hoa ngẫu nhiên bất ngờ">
+            <span>🎲 Gieo Hoa Ngẫu Nhiên</span>
+          </button>
+        </div>
+      </aside>
+
+      <!-- Canvas Center Area -->
+      <section class="canvas-wrapper">
+        <canvas id="flowerCanvas"></canvas>
+
+        <!-- Interactive Tip Overlay -->
+        <div class="interactive-tip" id="garden-tip">
+          <div class="tip-content">
+            <span class="tip-icon">✨</span>
+            <span id="garden-tip-text">Tự do chỉnh các thanh trượt bên trái để biến hóa ra đóa hoa mang phong cách của cậu nhé!</span>
+          </div>
+        </div>
+
+        <!-- Step-by-Step Tutorial Overlay / Player -->
+        <div class="tutorial-overlay hidden" id="tutorial-overlay">
+          <div class="tutorial-card glass-panel">
+            <div class="tutorial-header">
+              <div class="tutorial-step-badge">Bí Kíp Vẽ • Bước <span id="tut-step-num">1</span> / 6</div>
+              <h4 id="tut-step-title">1. Xác định tọa độ & Vẽ Nhụy hoa</h4>
+            </div>
+            <p id="tut-step-desc">Tạo điểm trung tâm (x, y) và vẽ vòng tròn nhụy hoa với màu vàng óng.</p>
+            
+            <div class="tutorial-progress-bar">
+              <div class="progress-fill" id="tut-progress-fill" style="width: 16.6%;"></div>
+            </div>
+
+            <div class="tutorial-controls">
+              <button class="btn btn-secondary" id="btn-tut-prev">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                <span>Trước</span>
+              </button>
+              <button class="btn btn-primary" id="btn-tut-play">
+                <svg id="tut-play-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                <span id="tut-play-text">Tự Động Phát</span>
+              </button>
+              <button class="btn btn-secondary" id="btn-tut-next">
+                <span>Tiếp</span>
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Stats Floating HUD -->
+        <div class="floating-hud glass-panel">
+          <div class="hud-item">
+            <span class="hud-label">🌸 Hoa trên màn hình:</span>
+            <span class="hud-value" id="hud-flower-count">1</span>
+          </div>
+          <div class="hud-item">
+            <span class="hud-label">✨ Bụi sao:</span>
+            <span class="hud-value" id="hud-particle-count">0</span>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Modal: Polaroid Photo Card Studio (Live Preview, Photo Inserter & Downloader) -->
+    <div class="modal-backdrop hidden" id="modal-polaroid-studio">
+      <div class="polaroid-studio-card glass-panel">
+        <div class="modal-header">
+          <div class="modal-title-group">
+            <h3>📸 Tạo Thiệp Ảnh Kỷ Niệm Polaroid</h3>
+            <span class="modal-subtitle">Đóng khung đóa hoa của cậu kèm ảnh xinh xắn</span>
+          </div>
+          <button class="letter-close-btn" id="btn-close-polaroid-studio">✕</button>
+        </div>
+
+        <div class="polaroid-studio-body">
+          <!-- Left: Real-time Polaroid Card Canvas Preview -->
+          <div class="polaroid-preview-area">
+            <div class="polaroid-frame-mockup" id="polaroid-mockup-container">
+              <canvas id="polaroidRenderCanvas"></canvas>
+            </div>
+          </div>
+
+          <!-- Right: Customization Tools for Card -->
+          <div class="polaroid-tools-area">
+            <!-- 1. Layout Mode Selector -->
+            <div class="tool-section">
+              <label class="tool-title">1. Chọn Kiểu Bố Cục Thiệp:</label>
+              <div class="card-layout-selector">
+                <button class="layout-btn active" data-layout="dual">
+                  <span class="layout-icon">🖼️🌸</span>
+                  <span>Ảnh & Hoa Song Hành</span>
+                </button>
+                <button class="layout-btn" data-layout="flower_crown">
+                  <span class="layout-icon">👑✨</span>
+                  <span>Ảnh Lồng Khung Hoa</span>
+                </button>
+                <button class="layout-btn" data-layout="flower_only">
+                  <span class="layout-icon">🌸✨</span>
+                  <span>Chỉ Đóa Hoa</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- 2. Photo Inserter / Upload Tool -->
+            <div class="tool-section">
+              <label class="tool-title">2. Chèn Ảnh Của Bạn Ấy:</label>
+              <div class="photo-uploader-box">
+                <input type="file" id="input-card-photo" accept="image/*" class="file-input-hidden">
+                <button class="btn btn-secondary w-100" id="btn-trigger-upload">
+                  <span>📁 Tải Ảnh Lên Từ Máy</span>
+                </button>
+                <div class="uploaded-photo-preview hidden" id="uploaded-photo-box">
+                  <img id="preview-photo-thumb" src="" alt="Thumbnail">
+                  <div class="photo-info-col">
+                    <span class="photo-name-text">Ảnh kỷ niệm</span>
+                    <button class="btn-text-danger" id="btn-remove-photo">Gỡ ảnh</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 3. Caption Text -->
+            <div class="tool-section">
+              <label class="tool-title">3. Lời Tựa Đề Dưới Thiệp:</label>
+              <input type="text" id="input-card-caption" class="text-input" placeholder="Ví dụ: Tác phẩm của Linh ✨">
+            </div>
+
+            <!-- 4. Download Action Buttons -->
+            <div class="polaroid-action-footer">
+              <button class="btn btn-bloom w-100" id="btn-download-polaroid-png">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                  <polyline points="7 10 12 15 17 10"></polyline>
+                  <line x1="12" y1="15" x2="12" y2="3"></line>
+                </svg>
+                <span>Tải Thiệp Ảnh Về Máy (Chuẩn HD Sắc Nét)</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal: Mảnh Giấy Nhắn (Secret Note) -->
+    <div class="modal-backdrop hidden" id="modal-secret-note">
+      <div class="letter-container">
+        <div class="envelope-top-seal">
+          <span class="wax-seal">💌</span>
+        </div>
+
+        <div class="letter-paper">
+          <button class="letter-close-btn" id="btn-close-note" title="Đóng">✕</button>
+          
+          <div class="letter-header">
+            <h2 class="letter-recipient" id="note-recipient-text">Gửi Cậu Nhé ✨</h2>
+            <div class="letter-date" id="note-current-date">Hôm nay 🌿</div>
+          </div>
+
+          <div class="letter-content" id="note-body-text">
+            <!-- Dynamically typed via Typewriter in app.js -->
+          </div>
+
+          <div class="letter-actions" style="justify-content: center;">
+            <button class="btn btn-bloom w-100" id="btn-note-try-bloom">
+              <span>🌸 Khám phá studio ngay!</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal: Bói Hoa Hôm Nay (Flower Mood & Fortune) -->
+    <div class="modal-backdrop hidden" id="modal-fortune">
+      <div class="fortune-card glass-panel">
+        <button class="letter-close-btn" id="btn-close-fortune" title="Đóng">✕</button>
+        <div class="fortune-icon-big" id="fortune-emoji">🌸</div>
+        <h3 id="fortune-flower-name">Hoa Anh Đào (May Mắn 100%)</h3>
+        <p class="fortune-quote" id="fortune-quote-text">"Hôm nay sự ngọt ngào và nụ cười của cậu sẽ làm bừng sáng mọi nơi cậu bước tới!"</p>
+        <div class="fortune-stats">
+          <div class="fortune-stat-item">
+            <span class="stat-title">Màu may mắn:</span>
+            <span class="stat-val" id="fortune-lucky-color">Hồng Pastel & Vàng Nắng</span>
+          </div>
+          <div class="fortune-stat-item">
+            <span class="stat-title">Năng lượng:</span>
+            <span class="stat-val" id="fortune-energy-level">Tươi sáng & Rạng rỡ ✨</span>
+          </div>
+        </div>
+        <button class="btn btn-primary w-100" id="btn-apply-fortune-palette">
+          <span>🎨 Áp Dụng Màu May Mắn Này Lên Hoa!</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Modal: Chỉnh Sửa Tên & Lời Nhắn -->
+    <div class="modal-backdrop hidden" id="modal-customize">
+      <div class="custom-modal-card glass-panel">
+        <div class="modal-header">
+          <h3>✨ Cá Nhân Hóa Dành Riêng Cho Cậu</h3>
+          <button class="letter-close-btn" id="btn-close-customize">✕</button>
+        </div>
+        <div class="modal-body">
+          <div class="input-group">
+            <label>Tên hoặc Biệt danh của bạn ấy:</label>
+            <input type="text" id="input-crush-name" class="text-input" placeholder="Ví dụ: Linh, Trang, Vy, Em Bé, Bạn Nhỏ...">
+          </div>
+
+          <div class="input-group">
+            <label>Ảnh đại diện của bạn ấy (Tùy chọn):</label>
+            <div class="avatar-upload-row">
+              <input type="file" id="input-avatar-photo" accept="image/*" class="file-input-hidden">
+              <button class="btn btn-secondary btn-sm" id="btn-trigger-avatar-upload">Chọn Ảnh Đại Diện</button>
+              <button class="btn-text-danger hidden" id="btn-remove-avatar">Xóa ảnh</button>
+            </div>
+          </div>
+
+          <div class="input-group">
+            <label>Tiêu đề góc màn hình:</label>
+            <input type="text" id="input-garden-title" class="text-input" placeholder="Ví dụ: Góc Sáng Tạo Của Linh ✨">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" id="btn-reset-default-text">Mặc Định Đáng Yêu</button>
+          <button class="btn btn-primary" id="btn-save-customize">Lưu & Áp Dụng ✨</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="audio.js?v=1.2"></script>
+  <script src="flower.js?v=1.2"></script>
+  <script src="app.js?v=1.2"></script>
+</body>
+</html>
