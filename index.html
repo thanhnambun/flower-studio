@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=14.0">
+  <link rel="stylesheet" href="style.css?v=16.0">
 </head>
 <body>
   <div class="app-container">
@@ -111,25 +111,21 @@
 
     <!-- Mode Selector Tabs (Independent Floating Dock: Top on Desktop, Bottom on Mobile) -->
     <div class="mode-tabs" id="main-mode-tabs">
-      <button class="mode-tab active" data-mode="studio" id="btn-mode-studio">
+      <button class="mode-tab active" data-mode="studio" id="btn-mode-studio" title="Tự tay thiết kế hoa">
         <span class="tab-icon">🎨</span>
-        <span class="tab-label-full">Tự Tay Thiết Kế</span>
-        <span class="tab-label-short">Thiết Kế</span>
+        <span>Thiết Kế</span>
       </button>
-      <button class="mode-tab" data-mode="garden" id="btn-mode-garden">
+      <button class="mode-tab" data-mode="garden" id="btn-mode-garden" title="Khu vườn hoa tự do">
         <span class="tab-icon">🌸</span>
-        <span class="tab-label-full">Khu Vườn Tự Do</span>
-        <span class="tab-label-short">Vườn Hoa</span>
+        <span>Vườn Hoa</span>
       </button>
-      <button class="mode-tab" data-mode="brush" id="btn-mode-brush">
+      <button class="mode-tab" data-mode="brush" id="btn-mode-brush" title="Bút vẽ hoa thần kỳ">
         <span class="tab-icon">🪄</span>
-        <span class="tab-label-full">Bút Vẽ Thần Kỳ</span>
-        <span class="tab-label-short">Bút Vẽ</span>
+        <span>Bút Vẽ</span>
       </button>
-      <button class="mode-tab" data-mode="tutorial" id="btn-mode-tutorial">
+      <button class="mode-tab" data-mode="tutorial" id="btn-mode-tutorial" title="Bí kíp vẽ hoa từng bước">
         <span class="tab-icon">📖</span>
-        <span class="tab-label-full">Bí Kíp Vẽ Hoa</span>
-        <span class="tab-label-short">Bí Kíp</span>
+        <span>Bí Kíp</span>
       </button>
     </div>
 
@@ -494,7 +490,7 @@
           <button class="letter-close-btn" id="btn-close-note" title="Đóng">✕</button>
           
           <div class="letter-header">
-            <h2 class="letter-recipient" id="note-recipient-text">Gửi Cậu Nhé ✨</h2>
+            <h2 class="letter-recipient" id="note-recipient-text">Chào cậu ✨</h2>
             <div class="letter-date" id="note-current-date">Hôm nay 🌿</div>
           </div>
 
@@ -572,6 +568,6 @@
 
   <script src="audio.js?v=2.0"></script>
   <script src="flower.js?v=2.0"></script>
-  <script src="app.js?v=2.0"></script>
+  <script src="app.js?v=4.0"></script>
 </body>
 </html>

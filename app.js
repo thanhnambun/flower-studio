@@ -1380,4 +1380,9 @@ Mong là góc nhỏ này sẽ mang lại cho cậu một chút niềm vui và s�
 
   // Start Animation Engine
   renderLoop();
+
+  // Tự động mở bức thư lời nhắn yêu thương ngay khi vào trang!
+  setTimeout(() => {
+    openSecretNoteModal();
+  }, 400);
 });
