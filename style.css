@@ -1419,11 +1419,12 @@ body {
   transition: opacity 0.3s ease;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1024px) {
   .top-nav {
     height: 56px;
-    padding: 0 10px;
-    gap: 6px;
+    padding: 0 12px;
+    gap: 8px;
+    position: relative;
   }
 
   .mobile-controls-btn {
@@ -1434,6 +1435,7 @@ body {
 
   .brand {
     gap: 8px;
+    min-width: 0;
   }
 
   .brand-text h1 {
@@ -1447,6 +1449,7 @@ body {
   .badge-custom {
     padding: 3px 8px;
     font-size: 0.72rem;
+    white-space: nowrap;
   }
 
   .polaroid-studio-body {
@@ -1483,33 +1486,36 @@ body {
 
   /* Bottom Fixed Navigation Bar (App-like dock) */
   .mode-tabs {
-    position: fixed;
-    bottom: 12px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 15;
-    background: rgba(16, 19, 36, 0.92);
-    backdrop-filter: blur(24px);
-    -webkit-backdrop-filter: blur(24px);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.1);
-    padding: 4px;
-    gap: 4px;
-    width: calc(100% - 20px);
-    max-width: 420px;
-    justify-content: space-around;
+    position: fixed !important;
+    bottom: 12px !important;
+    left: 50% !important;
+    top: auto !important;
+    transform: translateX(-50%) !important;
+    z-index: 20 !important;
+    background: rgba(16, 19, 36, 0.94) !important;
+    backdrop-filter: blur(24px) !important;
+    -webkit-backdrop-filter: blur(24px) !important;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.12) !important;
+    padding: 4px !important;
+    gap: 4px !important;
+    width: calc(100% - 24px) !important;
+    max-width: 440px !important;
+    justify-content: space-around !important;
+    border-radius: var(--radius-full) !important;
   }
 
   .mode-tab {
     flex: 1;
-    padding: 7px 4px;
-    font-size: 0.74rem;
+    padding: 8px 6px;
+    font-size: 0.75rem;
     justify-content: center;
     gap: 5px;
-    border-radius: var(--radius-md);
+    border-radius: var(--radius-full);
+    white-space: nowrap;
   }
 
   .mode-tab span:not(.tab-icon) {
-    display: inline-block !important;
+    display: inline-block;
     font-size: 0.72rem;
   }
 
