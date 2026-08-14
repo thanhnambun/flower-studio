@@ -105,6 +105,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const bgmIconOff = document.getElementById('bgm-icon-off');
   const btnTogglePetals = document.getElementById('btn-toggle-petals');
   const btnClearCanvas = document.getElementById('btn-clear-canvas');
+  const btnSurpriseBloomMobile = document.getElementById('btn-surprise-bloom-mobile');
+  const btnTogglePetalsMobile = document.getElementById('btn-toggle-petals-mobile');
+  const btnClearCanvasMobile = document.getElementById('btn-clear-canvas-mobile');
 
   // HUD
   const hudFlowerCount = document.getElementById('hud-flower-count');
@@ -366,10 +369,36 @@ Mong là góc nhỏ này sẽ mang lại cho cậu một chút niềm vui và s�
   });
 
   // Petal Rain Toggle
-  btnTogglePetals?.addEventListener('click', () => {
+  function togglePetalRain() {
     isPetalRainActive = !isPetalRainActive;
-    btnTogglePetals.classList.toggle('active-tint', isPetalRainActive);
+    btnTogglePetals?.classList.toggle('active-tint', isPetalRainActive);
+    btnTogglePetalsMobile?.classList.toggle('active-tint', isPetalRainActive);
     window.soundEngine.playSparkle();
+  }
+
+  btnTogglePetals?.addEventListener('click', togglePetalRain);
+  btnTogglePetalsMobile?.addEventListener('click', togglePetalRain);
+
+  // Clear Canvas Handler
+  function handleClearCanvas() {
+    flowers = [];
+    particles = [];
+    loveBubbles = [];
+    if (currentMode === 'studio') {
+      spawnStudioFlower(true);
+    }
+    window.soundEngine.playSparkle();
+  }
+
+  btnClearCanvas?.addEventListener('click', handleClearCanvas);
+  btnClearCanvasMobile?.addEventListener('click', () => {
+    toggleMobileSidebar(false);
+    handleClearCanvas();
+  });
+
+  btnSurpriseBloomMobile?.addEventListener('click', () => {
+    toggleMobileSidebar(false);
+    bloomSurpriseShow();
   });
 
   // Switch App Mode

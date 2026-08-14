@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=2.0">
+  <link rel="stylesheet" href="style.css?v=3.0">
 </head>
 <body>
   <div class="app-container">
@@ -49,26 +49,6 @@
           </div>
           <span class="sub-badge">Custom DIY Flower Studio 🎨</span>
         </div>
-      </div>
-
-      <!-- Mode Selector Tabs -->
-      <div class="mode-tabs">
-        <button class="mode-tab active" data-mode="studio" id="btn-mode-studio">
-          <span class="tab-icon">🎨</span>
-          <span>Tự Tay Thiết Kế</span>
-        </button>
-        <button class="mode-tab" data-mode="garden" id="btn-mode-garden">
-          <span class="tab-icon">🌸</span>
-          <span>Khu Vườn Tự Do</span>
-        </button>
-        <button class="mode-tab" data-mode="brush" id="btn-mode-brush">
-          <span class="tab-icon">🪄</span>
-          <span>Bút Vẽ Thần Kỳ</span>
-        </button>
-        <button class="mode-tab" data-mode="tutorial" id="btn-mode-tutorial">
-          <span class="tab-icon">📖</span>
-          <span>Bí Kíp Vẽ Hoa</span>
-        </button>
       </div>
 
       <!-- Top Action Buttons -->
@@ -132,6 +112,26 @@
       </div>
     </header>
 
+    <!-- Mode Selector Tabs (Fixed Floating Bar) -->
+    <div class="mode-tabs" id="main-mode-tabs">
+      <button class="mode-tab active" data-mode="studio" id="btn-mode-studio">
+        <span class="tab-icon">🎨</span>
+        <span>Tự Tay Thiết Kế</span>
+      </button>
+      <button class="mode-tab" data-mode="garden" id="btn-mode-garden">
+        <span class="tab-icon">🌸</span>
+        <span>Khu Vườn Tự Do</span>
+      </button>
+      <button class="mode-tab" data-mode="brush" id="btn-mode-brush">
+        <span class="tab-icon">🪄</span>
+        <span>Bút Vẽ Thần Kỳ</span>
+      </button>
+      <button class="mode-tab" data-mode="tutorial" id="btn-mode-tutorial">
+        <span class="tab-icon">📖</span>
+        <span>Bí Kíp Vẽ Hoa</span>
+      </button>
+    </div>
+
     <!-- Main Workspace -->
     <main class="main-workspace">
       <!-- Left Sidebar: Controls -->
@@ -143,6 +143,22 @@
             <h3>Xưởng Tùy Chỉnh Hoa</h3>
           </div>
           <button class="letter-close-btn" id="btn-close-sidebar-mobile" title="Đóng">✕</button>
+        </div>
+
+        <!-- Mobile Quick Actions Toolbar -->
+        <div class="mobile-sidebar-actions">
+          <button class="btn btn-surprise" id="btn-surprise-bloom-mobile" title="Một điều bất ngờ nhỏ tặng cậu!">
+            <span>✨</span>
+            <span>Bất Ngờ</span>
+          </button>
+          <button class="btn btn-secondary" id="btn-toggle-petals-mobile" title="Bật/Tắt Cánh Hoa Rơi">
+            <span>🌸</span>
+            <span>Mưa Hoa</span>
+          </button>
+          <button class="btn btn-secondary" id="btn-clear-canvas-mobile" title="Xóa màn hình">
+            <span>🗑️</span>
+            <span>Xóa</span>
+          </button>
         </div>
 
         <!-- Preset Inspiration Section -->
