@@ -1082,18 +1082,27 @@ html, body {
 .polaroid-frame-mockup {
   width: 280px;
   height: 350px;
-  background: #ffffff;
-  border-radius: 4px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
-  padding: 12px;
+  background: transparent;
+  border-radius: 6px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5), 0 0 20px rgba(251, 113, 133, 0.15);
+  padding: 0;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
+  position: relative;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.polaroid-frame-mockup:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.6), 0 0 25px rgba(251, 113, 133, 0.25);
 }
 
 #polaroidRenderCanvas {
   width: 100%;
   height: 100%;
   display: block;
+  border-radius: 6px;
 }
 
 .polaroid-tools-area {
@@ -1187,6 +1196,76 @@ html, body {
   font-size: 0.8rem;
   color: var(--text-primary);
   font-weight: 500;
+}
+
+/* Chip Selector Grid for Theme, Washi, Stamps */
+.chip-selector-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+}
+
+.chip-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  background: var(--bg-input);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-md);
+  color: var(--text-secondary);
+  font-family: var(--font-main);
+  font-size: 0.76rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: left;
+}
+
+.chip-btn .chip-icon {
+  font-size: 0.95rem;
+  flex-shrink: 0;
+}
+
+.chip-btn:hover {
+  background: var(--bg-panel-hover);
+  color: white;
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+.chip-btn.active {
+  background: rgba(251, 113, 133, 0.2);
+  border-color: var(--accent-pink);
+  color: white;
+  font-weight: 600;
+  box-shadow: 0 0 10px rgba(251, 113, 133, 0.25);
+}
+
+/* Caption suggestions row */
+.caption-suggestions-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.caption-pill {
+  padding: 4px 10px;
+  font-size: 0.72rem;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px dashed rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: var(--font-main);
+}
+
+.caption-pill:hover {
+  background: rgba(251, 113, 133, 0.15);
+  border-color: var(--accent-pink);
+  color: #fff;
+  transform: translateY(-1px);
 }
 
 .polaroid-action-footer {

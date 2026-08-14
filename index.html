@@ -9,8 +9,8 @@
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=16.0">
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Dancing+Script:wght@600;700&family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css?v=18.0">
 </head>
 <body>
   <div class="app-container">
@@ -457,13 +457,89 @@
               </div>
             </div>
 
-            <!-- 3. Caption Text -->
+            <!-- 3. Frame Theme Selector -->
             <div class="tool-section">
-              <label class="tool-title">3. Lời Tựa Đề Dưới Thiệp:</label>
-              <input type="text" id="input-card-caption" class="text-input" placeholder="Ví dụ: Tác phẩm của Linh ✨">
+              <label class="tool-title">3. Phong Cách Khung Thiệp:</label>
+              <div class="chip-selector-grid">
+                <button class="chip-btn active" data-frame-theme="white">
+                  <span class="chip-icon">🤍</span>
+                  <span>Trắng Kem Cổ Điển</span>
+                </button>
+                <button class="chip-btn" data-frame-theme="kraft">
+                  <span class="chip-icon">📜</span>
+                  <span>Vintage Kraft Paper</span>
+                </button>
+                <button class="chip-btn" data-frame-theme="pastel">
+                  <span class="chip-icon">🌸</span>
+                  <span>Pastel Mộng Mơ</span>
+                </button>
+                <button class="chip-btn" data-frame-theme="film">
+                  <span class="chip-icon">🎞️</span>
+                  <span>Noir Film Nghệ Thuật</span>
+                </button>
+              </div>
             </div>
 
-            <!-- 4. Download Action Buttons -->
+            <!-- 4. Washi Tape Decor -->
+            <div class="tool-section">
+              <label class="tool-title">4. Băng Dính Washi Tape Trang Trí:</label>
+              <div class="chip-selector-grid">
+                <button class="chip-btn active" data-washi="sakura">
+                  <span class="chip-icon">🎀</span>
+                  <span>Hồng Sakura</span>
+                </button>
+                <button class="chip-btn" data-washi="mint">
+                  <span class="chip-icon">🌿</span>
+                  <span>Xanh Bạc Hà</span>
+                </button>
+                <button class="chip-btn" data-washi="gold">
+                  <span class="chip-icon">✨</span>
+                  <span>Ánh Kim Vàng</span>
+                </button>
+                <button class="chip-btn" data-washi="none">
+                  <span class="chip-icon">✕</span>
+                  <span>Không Dán</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- 5. Stamp Decor -->
+            <div class="tool-section">
+              <label class="tool-title">5. Tem & Con Dấu Kỷ Niệm:</label>
+              <div class="chip-selector-grid">
+                <button class="chip-btn active" data-stamp="love">
+                  <span class="chip-icon">💌</span>
+                  <span>Made with Love</span>
+                </button>
+                <button class="chip-btn" data-stamp="bloom">
+                  <span class="chip-icon">🌸</span>
+                  <span>Special Bloom</span>
+                </button>
+                <button class="chip-btn" data-stamp="magic">
+                  <span class="chip-icon">✨</span>
+                  <span>Pure Magic</span>
+                </button>
+                <button class="chip-btn" data-stamp="none">
+                  <span class="chip-icon">✕</span>
+                  <span>Không Dấu</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- 6. Caption Text & Quick Suggestions -->
+            <div class="tool-section">
+              <label class="tool-title">6. Lời Tựa Đề Dưới Thiệp (Nét Viết Tay):</label>
+              <input type="text" id="input-card-caption" class="text-input" placeholder="Ví dụ: Tác phẩm của Linh ✨">
+              
+              <div class="caption-suggestions-row">
+                <button class="caption-pill" data-caption="Gửi tặng cậu một đóa hoa xinh ✨">Gửi tặng cậu ✨</button>
+                <button class="caption-pill" data-caption="Luôn mỉm cười rạng rỡ như hoa nhé 🌸">Rạng rỡ như hoa 🌸</button>
+                <button class="caption-pill" data-caption="Kỷ niệm ngày hoa nở cùng nhau 🌿">Ngày hoa nở 🌿</button>
+                <button class="caption-pill" data-caption="Đóa hoa ngọt ngào 10/10 điểm 💖">Ngọt ngào 10/10 💖</button>
+              </div>
+            </div>
+
+            <!-- Download Action Buttons -->
             <div class="polaroid-action-footer">
               <button class="btn btn-bloom w-100" id="btn-download-polaroid-png">
                 <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">

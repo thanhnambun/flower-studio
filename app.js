@@ -34,6 +34,10 @@ document.addEventListener('DOMContentLoaded', () => {
   const polaroidRenderCanvas = document.getElementById('polaroidRenderCanvas');
   const polaroidCtx = polaroidRenderCanvas.getContext('2d');
   const layoutButtons = document.querySelectorAll('.layout-btn');
+  const frameThemeButtons = document.querySelectorAll('[data-frame-theme]');
+  const washiButtons = document.querySelectorAll('[data-washi]');
+  const stampButtons = document.querySelectorAll('[data-stamp]');
+  const captionPills = document.querySelectorAll('.caption-pill');
   const inputCardPhoto = document.getElementById('input-card-photo');
   const btnTriggerUpload = document.getElementById('btn-trigger-upload');
   const uploadedPhotoBox = document.getElementById('uploaded-photo-box');
@@ -141,13 +145,13 @@ document.addEventListener('DOMContentLoaded', () => {
   ];
 
   const DEFAULT_NOTE_TEXT = 
-`Chào cậu nhé! ✨
+`Hello đằng ấy! ✨
 
-Biết cậu thích những thứ xinh xắn và nghệ thuật, nên tớ đã tự tay lập trình một chiếc Flower Studio nhỏ này tặng riêng cho cậu ngồi mày mò, nghịch màu và ngắm hoa lúc rảnh rỗi hoặc sau những giờ học tập/làm việc mệt mỏi.
+Tớ vừa tự tay lập trình một chiếc “Flower Studio” nhỏ xíu này dành tặng riêng cho cậu. Hy vọng đây sẽ là góc nhỏ để cậu thư giãn, nghịch màu và ngắm hoa sau những giờ học tập hay làm việc căng thẳng.
 
-Ở đây cậu có thể tự do uốn nắn từng cánh hoa, thử các bảng màu theo gu riêng, hoặc bấm nút "Bói Hoa Hôm Nay" để xem một quẻ may mắn vui vẻ nhé!
+Cậu có thể tự do chỉnh từng cánh hoa, phối màu theo gu riêng, hoặc thử bấm “Bói Hoa Hôm Nay” xem hôm nay có quẻ may mắn nào nhé!
 
-Mong là góc nhỏ này sẽ mang lại cho cậu một chút niềm vui và sự thư giãn. Chúc cậu luôn mỉm cười rạng rỡ như đóa hoa đẹp nhất do chính tay cậu tạo ra! 🌸`;
+Tớ tin là cậu sẽ tạo ra được những bông hoa rực rỡ và đáng yêu y như cậu vậy. Chúc cậu có những phút giây thật chill và luôn mỉm cười rạng rỡ nhé!`;
 
   // Persistent User Data
   let crushData = {
@@ -159,6 +163,9 @@ Mong là góc nhỏ này sẽ mang lại cho cậu một chút niềm vui và s�
 
   // Polaroid State
   let currentCardLayout = 'dual'; // 'dual' | 'flower_crown' | 'flower_only'
+  let currentFrameTheme = 'white'; // 'white' | 'kraft' | 'pastel' | 'film'
+  let currentWashiTape = 'sakura'; // 'sakura' | 'mint' | 'gold' | 'none'
+  let currentStampStyle = 'love'; // 'love' | 'bloom' | 'magic' | 'none'
   let uploadedUserImage = null;
 
   function loadCrushData() {
@@ -664,7 +671,9 @@ Mong là góc nhỏ này sẽ mang lại cho cậu một chút niềm vui và s�
 
   function openPolaroidStudio() {
     modalPolaroidStudio.classList.remove('hidden');
-    inputCardCaption.value = `Tác phẩm của ${crushData.crushName} ✨`;
+    if (!inputCardCaption.value) {
+      inputCardCaption.value = `Tác phẩm của ${crushData.crushName} ✨`;
+    }
     renderPolaroidCardPreview();
     window.soundEngine.playSparkle();
   }
@@ -672,7 +681,7 @@ Mong là góc nhỏ này sẽ mang lại cho cậu một chút niềm vui và s�
   btnOpenPolaroidModal?.addEventListener('click', openPolaroidStudio);
   btnClosePolaroidStudio?.addEventListener('click', () => modalPolaroidStudio.classList.add('hidden'));
 
-  // Layout Buttons
+  // 1. Layout Mode Selector
   layoutButtons.forEach(btn => {
     btn.addEventListener('click', () => {
       layoutButtons.forEach(b => b.classList.remove('active'));
@@ -680,6 +689,51 @@ Mong là góc nhỏ này sẽ mang lại cho cậu một chút niềm vui và s�
       currentCardLayout = btn.dataset.layout;
       renderPolaroidCardPreview();
       window.soundEngine.playSparkle();
+    });
+  });
+
+  // 2. Frame Theme Selector
+  frameThemeButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      frameThemeButtons.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      currentFrameTheme = btn.dataset.frameTheme;
+      renderPolaroidCardPreview();
+      window.soundEngine.playSparkle();
+    });
+  });
+
+  // 3. Washi Tape Selector
+  washiButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      washiButtons.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      currentWashiTape = btn.dataset.washi;
+      renderPolaroidCardPreview();
+      window.soundEngine.playSparkle();
+    });
+  });
+
+  // 4. Memory Stamp Selector
+  stampButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      stampButtons.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      currentStampStyle = btn.dataset.stamp;
+      renderPolaroidCardPreview();
+      window.soundEngine.playSparkle();
+    });
+  });
+
+  // 5. Quick Caption Pills
+  captionPills.forEach(pill => {
+    pill.addEventListener('click', () => {
+      const text = pill.dataset.caption;
+      if (text) {
+        inputCardCaption.value = text;
+        renderPolaroidCardPreview();
+        window.soundEngine.playSparkle();
+      }
     });
   });
 
@@ -743,39 +797,471 @@ Mong là góc nhỏ này sẽ mang lại cho cậu một chút niềm vui và s�
     saveCrushData();
   });
 
-  // Render Polaroid Card function (used both for Live Preview & High-Res Export)
+  // ============================================================
+  // POLAROID DECORATIVE RENDERING ENGINE (BOKEH, WASHI, STAMPS)
+  // ============================================================
+
+  // Seeded Bokeh & Sparkle Particles (Deterministic to prevent jumping on text change)
+  const POLAROID_BOKEH_SEEDS = [
+    { x: 0.15, y: 0.20, r: 0.12, color: 'rgba(255, 215, 0, 0.18)' },
+    { x: 0.85, y: 0.25, r: 0.16, color: 'rgba(244, 114, 182, 0.22)' },
+    { x: 0.25, y: 0.75, r: 0.14, color: 'rgba(192, 132, 252, 0.20)' },
+    { x: 0.78, y: 0.80, r: 0.18, color: 'rgba(96, 165, 250, 0.18)' },
+    { x: 0.50, y: 0.15, r: 0.10, color: 'rgba(251, 191, 36, 0.20)' },
+    { x: 0.10, y: 0.50, r: 0.15, color: 'rgba(236, 72, 153, 0.16)' },
+    { x: 0.90, y: 0.55, r: 0.13, color: 'rgba(167, 139, 250, 0.18)' },
+    { x: 0.40, y: 0.85, r: 0.11, color: 'rgba(254, 240, 138, 0.20)' }
+  ];
+
+  const POLAROID_STAR_SEEDS = [
+    { x: 0.18, y: 0.18, s: 12, alpha: 0.85 },
+    { x: 0.82, y: 0.16, s: 15, alpha: 0.90 },
+    { x: 0.12, y: 0.42, s: 10, alpha: 0.75 },
+    { x: 0.88, y: 0.45, s: 14, alpha: 0.85 },
+    { x: 0.22, y: 0.82, s: 13, alpha: 0.80 },
+    { x: 0.76, y: 0.78, s: 16, alpha: 0.95 },
+    { x: 0.50, y: 0.22, s: 11, alpha: 0.70 },
+    { x: 0.35, y: 0.12, s: 9, alpha: 0.65 },
+    { x: 0.65, y: 0.88, s: 10, alpha: 0.70 }
+  ];
+
+  const POLAROID_DUST_SEEDS = [
+    { x: 0.08, y: 0.28, r: 2.2, alpha: 0.6 },
+    { x: 0.28, y: 0.15, r: 1.8, alpha: 0.7 },
+    { x: 0.72, y: 0.22, r: 2.5, alpha: 0.6 },
+    { x: 0.92, y: 0.32, r: 2.0, alpha: 0.5 },
+    { x: 0.15, y: 0.65, r: 2.2, alpha: 0.7 },
+    { x: 0.85, y: 0.68, r: 1.9, alpha: 0.6 },
+    { x: 0.32, y: 0.80, r: 2.6, alpha: 0.8 },
+    { x: 0.68, y: 0.72, r: 2.1, alpha: 0.7 },
+    { x: 0.45, y: 0.35, r: 1.6, alpha: 0.5 },
+    { x: 0.55, y: 0.65, r: 1.7, alpha: 0.5 }
+  ];
+
+  function draw4PointStar(ctx, cx, cy, size, color) {
+    ctx.save();
+    ctx.fillStyle = color;
+    ctx.beginPath();
+    const half = size / 2;
+    const inset = size * 0.18;
+    ctx.moveTo(cx, cy - half);
+    ctx.quadraticCurveTo(cx + inset, cy - inset, cx + half, cy);
+    ctx.quadraticCurveTo(cx + inset, cy + inset, cx, cy + half);
+    ctx.quadraticCurveTo(cx - inset, cy + inset, cx - half, cy);
+    ctx.quadraticCurveTo(cx - inset, cy - inset, cx, cy - half);
+    ctx.closePath();
+    ctx.fill();
+
+    // Central bright glow
+    ctx.fillStyle = '#ffffff';
+    ctx.beginPath();
+    ctx.arc(cx, cy, size * 0.15, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
+  }
+
+  function drawBokehAndSparkles(ctx, x, y, w, h, theme) {
+    // 1. Soft Bokeh Orbs
+    POLAROID_BOKEH_SEEDS.forEach(b => {
+      const bx = x + b.x * w;
+      const by = y + b.y * h;
+      const radius = Math.min(w, h) * b.r;
+      const grad = ctx.createRadialGradient(bx, by, 0, bx, by, radius);
+      grad.addColorStop(0, b.color);
+      grad.addColorStop(0.6, b.color.replace(/[\d\.]+\)$/, '0.08)'));
+      grad.addColorStop(1, 'rgba(255, 255, 255, 0)');
+      ctx.fillStyle = grad;
+      ctx.beginPath();
+      ctx.arc(bx, by, radius, 0, Math.PI * 2);
+      ctx.fill();
+    });
+
+    // 2. 4-pointed Sparkle Stars
+    const starScale = w / 400;
+    POLAROID_STAR_SEEDS.forEach(s => {
+      const sx = x + s.x * w;
+      const sy = y + s.y * h;
+      const starSize = s.s * starScale;
+      const starColor = theme === 'pastel' 
+        ? `rgba(254, 240, 138, ${s.alpha})` 
+        : `rgba(255, 255, 255, ${s.alpha})`;
+      draw4PointStar(ctx, sx, sy, starSize, starColor);
+    });
+
+    // 3. Pollen Dust motes
+    ctx.fillStyle = theme === 'kraft' ? 'rgba(254, 240, 138, 0.65)' : 'rgba(255, 255, 255, 0.7)';
+    POLAROID_DUST_SEEDS.forEach(d => {
+      const dx = x + d.x * w;
+      const dy = y + d.y * h;
+      ctx.beginPath();
+      ctx.arc(dx, dy, d.r * starScale, 0, Math.PI * 2);
+      ctx.fill();
+    });
+  }
+
+  // Washi Tape with torn edge & 3D shadow
+  function drawWashiTape(ctx, x, y, tapeW, tapeH, angleDeg, style) {
+    if (style === 'none') return;
+
+    ctx.save();
+    ctx.translate(x, y);
+    ctx.rotate((angleDeg * Math.PI) / 180);
+
+    const halfW = tapeW / 2;
+    const halfH = tapeH / 2;
+
+    // 1. Subtle drop shadow
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.18)';
+    ctx.fillRect(-halfW + 3, -halfH + 3, tapeW, tapeH);
+
+    // 2. Build Torn Edge Path
+    ctx.beginPath();
+    ctx.moveTo(-halfW, -halfH);
+
+    // Top straight edge
+    ctx.lineTo(halfW, -halfH);
+
+    // Right torn serrated edge
+    const teethCount = 6;
+    const stepY = tapeH / teethCount;
+    for (let i = 0; i < teethCount; i++) {
+      const toothY = -halfH + (i + 0.5) * stepY;
+      const endY = -halfH + (i + 1) * stepY;
+      const indent = (i % 2 === 0 ? 3 : -3) * (tapeW / 120);
+      ctx.lineTo(halfW + indent, toothY);
+      ctx.lineTo(halfW, endY);
+    }
+
+    // Bottom straight edge
+    ctx.lineTo(-halfW, halfH);
+
+    // Left torn serrated edge
+    for (let i = teethCount - 1; i >= 0; i--) {
+      const toothY = -halfH + (i + 0.5) * stepY;
+      const startY = -halfH + i * stepY;
+      const indent = (i % 2 === 0 ? -3 : 3) * (tapeW / 120);
+      ctx.lineTo(-halfW + indent, toothY);
+      ctx.lineTo(-halfW, startY);
+    }
+    ctx.closePath();
+
+    // 3. Fill and Style per Washi Tape Theme
+    ctx.save();
+    ctx.clip();
+
+    if (style === 'sakura') {
+      // Soft Pink Sakura with polka dots
+      ctx.fillStyle = 'rgba(255, 182, 193, 0.85)';
+      ctx.fillRect(-halfW - 5, -halfH - 5, tapeW + 10, tapeH + 10);
+
+      // Subtle diagonal blush lines
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.35)';
+      ctx.lineWidth = Math.max(2, tapeH * 0.12);
+      for (let i = -tapeW; i < tapeW * 2; i += tapeH * 0.5) {
+        ctx.beginPath();
+        ctx.moveTo(i, -halfH);
+        ctx.lineTo(i + tapeH, halfH);
+        ctx.stroke();
+      }
+
+      // Mini white dots
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.6)';
+      const dotSpacing = tapeW / 6;
+      for (let dx = -halfW + dotSpacing / 2; dx < halfW; dx += dotSpacing) {
+        ctx.beginPath();
+        ctx.arc(dx, 0, tapeH * 0.12, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    } else if (style === 'mint') {
+      // Refreshing Pastel Mint Green with gingham grid
+      ctx.fillStyle = 'rgba(167, 243, 208, 0.82)';
+      ctx.fillRect(-halfW - 5, -halfH - 5, tapeW + 10, tapeH + 10);
+
+      // Gingham Grid Lines
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.4)';
+      ctx.lineWidth = Math.max(1.5, tapeH * 0.08);
+      for (let i = -halfW; i < halfW; i += tapeH * 0.3) {
+        ctx.beginPath();
+        ctx.moveTo(i, -halfH);
+        ctx.lineTo(i, halfH);
+        ctx.stroke();
+      }
+      for (let j = -halfH; j < halfH; j += tapeH * 0.3) {
+        ctx.beginPath();
+        ctx.moveTo(-halfW, j);
+        ctx.lineTo(halfW, j);
+        ctx.stroke();
+      }
+    } else if (style === 'gold') {
+      // Golden fairy sparkle tape
+      const grad = ctx.createLinearGradient(-halfW, -halfH, halfW, halfH);
+      grad.addColorStop(0, 'rgba(254, 240, 138, 0.88)');
+      grad.addColorStop(0.5, 'rgba(253, 224, 71, 0.88)');
+      grad.addColorStop(1, 'rgba(251, 191, 36, 0.88)');
+      ctx.fillStyle = grad;
+      ctx.fillRect(-halfW - 5, -halfH - 5, tapeW + 10, tapeH + 10);
+
+      // Gold Sparkle Stars & Specks
+      ctx.fillStyle = 'rgba(180, 83, 9, 0.45)';
+      const starSpacing = tapeW / 5;
+      for (let dx = -halfW + starSpacing / 2; dx < halfW; dx += starSpacing) {
+        draw4PointStar(ctx, dx, 0, tapeH * 0.35, 'rgba(255, 255, 255, 0.7)');
+      }
+    }
+
+    // Inner highlight edge on tape
+    ctx.strokeStyle = 'rgba(255, 255, 255, 0.4)';
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(-halfW, -halfH + 1);
+    ctx.lineTo(halfW, -halfH + 1);
+    ctx.stroke();
+
+    ctx.restore(); // restore clip
+    ctx.restore(); // restore transform
+  }
+
+  // Vintage Memory Stamp / Wax Seal
+  function drawMemoryStamp(ctx, x, y, size, stampType, theme) {
+    if (stampType === 'none') return;
+
+    ctx.save();
+    ctx.translate(x, y);
+    ctx.rotate((-6 * Math.PI) / 180);
+
+    const radius = size / 2;
+
+    if (stampType === 'love') {
+      // Circular Wax / Postmark Seal: "MADE WITH LOVE"
+      const stampColor = theme === 'film' ? 'rgba(244, 63, 94, 0.88)' : (theme === 'kraft' ? 'rgba(185, 28, 28, 0.85)' : 'rgba(225, 29, 72, 0.85)');
+      ctx.strokeStyle = stampColor;
+      ctx.fillStyle = stampColor;
+
+      // Outer dashed circle
+      ctx.lineWidth = Math.max(1.8, size * 0.035);
+      ctx.setLineDash([Math.max(3, size * 0.06), Math.max(2, size * 0.04)]);
+      ctx.beginPath();
+      ctx.arc(0, 0, radius, 0, Math.PI * 2);
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      // Inner solid circle
+      ctx.lineWidth = Math.max(1.2, size * 0.02);
+      ctx.beginPath();
+      ctx.arc(0, 0, radius * 0.82, 0, Math.PI * 2);
+      ctx.stroke();
+
+      // Top arc text / center text
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.font = `bold ${Math.max(9, size * 0.15)}px "Plus Jakarta Sans", sans-serif`;
+      ctx.fillText('MADE WITH LOVE', 0, -radius * 0.38);
+
+      // Heart emblem in center
+      ctx.font = `${Math.max(14, size * 0.32)}px sans-serif`;
+      ctx.fillText('💌', 0, radius * 0.05);
+
+      // Bottom subtext
+      ctx.font = `600 ${Math.max(7, size * 0.12)}px "Plus Jakarta Sans", sans-serif`;
+      ctx.fillText('★ 100% SWEET ★', 0, radius * 0.48);
+
+    } else if (stampType === 'bloom') {
+      // Botanical Stamp: "SPECIAL MEMORY"
+      const stampColor = theme === 'film' ? 'rgba(52, 211, 153, 0.88)' : (theme === 'kraft' ? 'rgba(194, 65, 12, 0.85)' : 'rgba(219, 39, 119, 0.85)');
+      ctx.strokeStyle = stampColor;
+      ctx.fillStyle = stampColor;
+
+      // Wavy cancellation lines on left side of the stamp
+      ctx.lineWidth = Math.max(1.2, size * 0.025);
+      const waveW = size * 0.5;
+      for (let line = -1; line <= 1; line++) {
+        const ly = line * size * 0.16;
+        ctx.beginPath();
+        ctx.moveTo(-radius - waveW, ly);
+        ctx.bezierCurveTo(-radius - waveW * 0.6, ly - 4, -radius - waveW * 0.4, ly + 4, -radius - 4, ly);
+        ctx.stroke();
+      }
+
+      // Outer circle
+      ctx.lineWidth = Math.max(1.8, size * 0.035);
+      ctx.beginPath();
+      ctx.arc(0, 0, radius, 0, Math.PI * 2);
+      ctx.stroke();
+
+      // Inner decorative ring
+      ctx.lineWidth = Math.max(1, size * 0.015);
+      ctx.beginPath();
+      ctx.arc(0, 0, radius * 0.8, 0, Math.PI * 2);
+      ctx.stroke();
+
+      // Text & Flower
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.font = `bold ${Math.max(8, size * 0.14)}px "Plus Jakarta Sans", sans-serif`;
+      ctx.fillText('SPECIAL BLOOM', 0, -radius * 0.36);
+
+      ctx.font = `${Math.max(14, size * 0.32)}px sans-serif`;
+      ctx.fillText('🌸', 0, radius * 0.05);
+
+      ctx.font = `600 ${Math.max(7, size * 0.11)}px "Plus Jakarta Sans", sans-serif`;
+      ctx.fillText('FLOWER STUDIO', 0, radius * 0.48);
+
+    } else if (stampType === 'magic') {
+      // Postage Badge: "PURE MAGIC"
+      const stampColor = theme === 'film' ? 'rgba(251, 191, 36, 0.9)' : (theme === 'kraft' ? 'rgba(120, 53, 15, 0.85)' : 'rgba(139, 92, 246, 0.85)');
+      ctx.strokeStyle = stampColor;
+      ctx.fillStyle = stampColor;
+
+      // Postage stamp scalloped rectangle
+      const rectW = size * 1.05;
+      const rectH = size * 0.85;
+      const halfW = rectW / 2;
+      const halfH = rectH / 2;
+
+      ctx.lineWidth = Math.max(1.8, size * 0.03);
+      ctx.strokeRect(-halfW, -halfH, rectW, rectH);
+
+      ctx.lineWidth = 1;
+      ctx.strokeRect(-halfW + 3, -halfH + 3, rectW - 6, rectH - 6);
+
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.font = `bold ${Math.max(8, size * 0.14)}px "Plus Jakarta Sans", sans-serif`;
+      ctx.fillText('PURE MAGIC', 0, -halfH * 0.42);
+
+      ctx.font = `${Math.max(13, size * 0.28)}px sans-serif`;
+      ctx.fillText('✨ 2026', 0, 0);
+
+      ctx.font = `600 ${Math.max(7, size * 0.10)}px "Plus Jakarta Sans", sans-serif`;
+      ctx.fillText('AUTHENTIC MEMORY', 0, halfH * 0.48);
+    }
+
+    ctx.restore();
+  }
+
+  // ==========================================
+  // MAIN POLAROID CARD DRAWING FUNCTION
+  // ==========================================
+
   function drawPolaroidCard(targetCtx, width, height) {
-    // 1. Background Paper (Clean white with subtle warm texture)
-    targetCtx.fillStyle = '#ffffff';
-    targetCtx.fillRect(0, 0, width, height);
-
-    // Subtle border
-    targetCtx.strokeStyle = '#e2e8f0';
-    targetCtx.lineWidth = Math.max(2, width * 0.004);
-    targetCtx.strokeRect(1, 1, width - 2, height - 2);
-
     const pad = width * 0.07;
     const photoWindowWidth = width - pad * 2;
     const photoWindowHeight = height * 0.72;
 
-    // Dark Photo Backdrop
+    // ----------------------------------------------------
+    // 1. FRAME THEME BACKGROUND & TEXTURE
+    // ----------------------------------------------------
+    if (currentFrameTheme === 'white') {
+      // CLASSIC WHITE: Elegant warm ivory paper + delicate double gold/slate line
+      targetCtx.fillStyle = '#ffffff';
+      targetCtx.fillRect(0, 0, width, height);
+
+      // Outer border
+      targetCtx.strokeStyle = '#e2e8f0';
+      targetCtx.lineWidth = Math.max(2, width * 0.004);
+      targetCtx.strokeRect(1, 1, width - 2, height - 2);
+
+      // Inner double border frame
+      targetCtx.strokeStyle = 'rgba(203, 213, 225, 0.6)';
+      targetCtx.lineWidth = 1;
+      targetCtx.strokeRect(pad * 0.45, pad * 0.45, width - pad * 0.9, height - pad * 0.9);
+
+    } else if (currentFrameTheme === 'kraft') {
+      // VINTAGE KRAFT: Warm cement kraft paper with organic fiber speckles
+      const kraftGrad = targetCtx.createLinearGradient(0, 0, width, height);
+      kraftGrad.addColorStop(0, '#ebdcc9');
+      kraftGrad.addColorStop(1, '#dfcbb4');
+      targetCtx.fillStyle = kraftGrad;
+      targetCtx.fillRect(0, 0, width, height);
+
+      // Procedural paper grain & subtle fibers
+      targetCtx.fillStyle = 'rgba(140, 109, 72, 0.06)';
+      for (let i = 0; i < 70; i++) {
+        const rx = ((i * 137.5) % width);
+        const ry = ((i * 293.7) % height);
+        targetCtx.fillRect(rx, ry, Math.max(1.5, width * 0.003), Math.max(1.5, width * 0.003));
+      }
+
+      // Vintage stitched dashed border
+      targetCtx.strokeStyle = '#8c6d48';
+      targetCtx.lineWidth = Math.max(1.5, width * 0.003);
+      targetCtx.setLineDash([width * 0.012, width * 0.008]);
+      targetCtx.strokeRect(pad * 0.45, pad * 0.45, width - pad * 0.9, height - pad * 0.9);
+      targetCtx.setLineDash([]);
+
+    } else if (currentFrameTheme === 'pastel') {
+      // PASTEL DREAM: Soft blush pink to dreamy lilac orchid gradient
+      const pastelGrad = targetCtx.createLinearGradient(0, 0, width, height);
+      pastelGrad.addColorStop(0, '#fff1f2');
+      pastelGrad.addColorStop(0.5, '#fae8ff');
+      pastelGrad.addColorStop(1, '#f3e8ff');
+      targetCtx.fillStyle = pastelGrad;
+      targetCtx.fillRect(0, 0, width, height);
+
+      // Outer pastel border
+      targetCtx.strokeStyle = 'rgba(244, 114, 182, 0.4)';
+      targetCtx.lineWidth = Math.max(2, width * 0.004);
+      targetCtx.strokeRect(1, 1, width - 2, height - 2);
+
+      // Inner pearl border
+      targetCtx.strokeStyle = 'rgba(192, 132, 252, 0.35)';
+      targetCtx.lineWidth = 1.2;
+      targetCtx.strokeRect(pad * 0.45, pad * 0.45, width - pad * 0.9, height - pad * 0.9);
+
+    } else if (currentFrameTheme === 'film') {
+      // NOIR FILM: Cinematic dark matte frame with film markings
+      targetCtx.fillStyle = '#131316';
+      targetCtx.fillRect(0, 0, width, height);
+
+      // Sleek subtle border
+      targetCtx.strokeStyle = 'rgba(255, 255, 255, 0.15)';
+      targetCtx.lineWidth = 1;
+      targetCtx.strokeRect(pad * 0.45, pad * 0.45, width - pad * 0.9, height - pad * 0.9);
+
+      // Minimalist film strip text
+      targetCtx.fillStyle = 'rgba(255, 255, 255, 0.35)';
+      targetCtx.font = `600 ${Math.max(8, width * 0.018)}px "Plus Jakarta Sans", sans-serif`;
+      targetCtx.textAlign = 'left';
+      targetCtx.fillText('▶ 24A • 35MM NOIR FILM', pad * 0.5, pad * 0.32);
+      targetCtx.textAlign = 'right';
+      targetCtx.fillText('ISO 400 • FLOWER STUDIO', width - pad * 0.5, pad * 0.32);
+    }
+
+    // ----------------------------------------------------
+    // 2. DARK PHOTO BACKDROP & BOKEH SPARKLES
+    // ----------------------------------------------------
     const grad = targetCtx.createLinearGradient(pad, pad, pad + photoWindowWidth, pad + photoWindowHeight);
-    grad.addColorStop(0, '#13182c');
-    grad.addColorStop(1, '#090b14');
+    if (currentFrameTheme === 'kraft') {
+      grad.addColorStop(0, '#221915');
+      grad.addColorStop(1, '#0e0a08');
+    } else if (currentFrameTheme === 'pastel') {
+      grad.addColorStop(0, '#241432');
+      grad.addColorStop(1, '#11091b');
+    } else if (currentFrameTheme === 'film') {
+      grad.addColorStop(0, '#0a0a0f');
+      grad.addColorStop(1, '#020204');
+    } else {
+      grad.addColorStop(0, '#13182c');
+      grad.addColorStop(1, '#090b14');
+    }
     targetCtx.fillStyle = grad;
     targetCtx.fillRect(pad, pad, photoWindowWidth, photoWindowHeight);
 
-    // Clip to Photo Window
+    // Clip all rendering to Photo Window
     targetCtx.save();
     targetCtx.beginPath();
     targetCtx.rect(pad, pad, photoWindowWidth, photoWindowHeight);
     targetCtx.clip();
 
-    // Render based on selected layout
+    // Render Bokeh, Stardust & Pollen Particles
+    drawBokehAndSparkles(targetCtx, pad, pad, photoWindowWidth, photoWindowHeight, currentFrameTheme);
+
+    // ----------------------------------------------------
+    // 3. PHOTO & FLOWER COMPOSITION (DUAL / CROWN / SOLO)
+    // ----------------------------------------------------
     if (currentCardLayout === 'dual') {
-      // DUAL LAYOUT: Photo on left, Flower on right (or top/bottom)
+      // DUAL LAYOUT: Photo on left, Flower on right
       if (uploadedUserImage) {
-        // Draw User Photo in left half
         const halfWidth = photoWindowWidth * 0.48;
         const photoAspect = uploadedUserImage.width / uploadedUserImage.height;
         const targetAspect = halfWidth / (photoWindowHeight - 20);
@@ -789,8 +1275,16 @@ Mong là góc nhỏ này sẽ mang lại cho cậu một chút niềm vui và s�
           sy = (uploadedUserImage.height - sh) / 2;
         }
 
+        // Draw photo with rounded aesthetic border
+        targetCtx.save();
+        targetCtx.beginPath();
+        targetCtx.rect(pad + 10, pad + 10, halfWidth, photoWindowHeight - 20);
+        targetCtx.clip();
         targetCtx.drawImage(uploadedUserImage, sx, sy, sw, sh, pad + 10, pad + 10, halfWidth, photoWindowHeight - 20);
-        targetCtx.strokeStyle = 'rgba(255, 255, 255, 0.2)';
+        targetCtx.restore();
+
+        targetCtx.strokeStyle = 'rgba(255, 255, 255, 0.25)';
+        targetCtx.lineWidth = 2;
         targetCtx.strokeRect(pad + 10, pad + 10, halfWidth, photoWindowHeight - 20);
 
         // Draw Flower on right half
@@ -808,7 +1302,7 @@ Mong là góc nhỏ này sẽ mang lại cho cậu một chút niềm vui và s�
         });
         cardFlower.draw(targetCtx);
       } else {
-        // Draw full main flower
+        // Full center flower with hint
         const flowerCenterX = pad + photoWindowWidth / 2;
         const flowerCenterY = pad + photoWindowHeight * 0.52;
         const cardFlower = new Flower({
@@ -822,8 +1316,8 @@ Mong là góc nhỏ này sẽ mang lại cho cậu một chút niềm vui và s�
         });
         cardFlower.draw(targetCtx);
 
-        // Prompt text
-        targetCtx.fillStyle = 'rgba(255, 255, 255, 0.6)';
+        // Friendly photo prompt text
+        targetCtx.fillStyle = 'rgba(255, 255, 255, 0.7)';
         targetCtx.font = `500 ${width * 0.026}px "Plus Jakarta Sans", sans-serif`;
         targetCtx.textAlign = 'center';
         targetCtx.fillText('(Tải ảnh của bạn ấy lên để hiện song hành)', flowerCenterX, pad + photoWindowHeight * 0.9);
@@ -835,17 +1329,23 @@ Mong là góc nhỏ này sẽ mang lại cho cậu một chút niềm vui và s�
         const px = pad + (photoWindowWidth - photoSize) / 2;
         const py = pad + (photoWindowHeight - photoSize) / 2;
 
+        targetCtx.save();
+        targetCtx.beginPath();
+        targetCtx.rect(px, py, photoSize, photoSize);
+        targetCtx.clip();
         targetCtx.drawImage(uploadedUserImage, 0, 0, uploadedUserImage.width, uploadedUserImage.height, px, py, photoSize, photoSize);
+        targetCtx.restore();
+
         targetCtx.strokeStyle = 'rgba(255, 255, 255, 0.4)';
         targetCtx.lineWidth = 3;
         targetCtx.strokeRect(px, py, photoSize, photoSize);
 
-        // Surrounding mini flowers
+        // Surrounding mini flowers on 4 corners
         const corners = [
-          { x: px - 10, y: py - 10 },
-          { x: px + photoSize + 10, y: py - 10 },
-          { x: px - 10, y: py + photoSize + 10 },
-          { x: px + photoSize + 10, y: py + photoSize + 10 }
+          { x: px - 8, y: py - 8 },
+          { x: px + photoSize + 8, y: py - 8 },
+          { x: px - 8, y: py + photoSize + 8 },
+          { x: px + photoSize + 8, y: py + photoSize + 8 }
         ];
 
         corners.forEach(c => {
@@ -890,27 +1390,75 @@ Mong là góc nhỏ này sẽ mang lại cho cậu một chút niềm vui và s�
       cardFlower.draw(targetCtx);
     }
 
-    targetCtx.restore();
+    targetCtx.restore(); // Restore clip from photo window
 
-    // Inner shadow frame on photo window
-    targetCtx.strokeStyle = 'rgba(0, 0, 0, 0.08)';
-    targetCtx.lineWidth = 1;
+    // Subtle inner shadow on photo window frame
+    targetCtx.strokeStyle = 'rgba(0, 0, 0, 0.15)';
+    targetCtx.lineWidth = 1.5;
     targetCtx.strokeRect(pad, pad, photoWindowWidth, photoWindowHeight);
 
-    // Bottom Caption & Meta
+    // ----------------------------------------------------
+    // 4. WASHI TAPE DECORATIONS (Top-Left & Top-Right / Corners)
+    // ----------------------------------------------------
+    if (currentWashiTape !== 'none') {
+      const tapeW = width * 0.24;
+      const tapeH = width * 0.055;
+      // Top-Left corner tape
+      drawWashiTape(targetCtx, pad + tapeW * 0.35, pad + tapeH * 0.1, tapeW, tapeH, -24, currentWashiTape);
+      // Top-Right corner tape
+      drawWashiTape(targetCtx, width - pad - tapeW * 0.35, pad + tapeH * 0.1, tapeW, tapeH, 22, currentWashiTape);
+    }
+
+    // ----------------------------------------------------
+    // 5. MEMORY STAMP / WAX SEAL
+    // ----------------------------------------------------
+    if (currentStampStyle !== 'none') {
+      const stampSize = width * 0.16;
+      // Stamp placed at bottom right corner of card
+      drawMemoryStamp(targetCtx, width - pad * 1.15, height * 0.86, stampSize, currentStampStyle, currentFrameTheme);
+    }
+
+    // ----------------------------------------------------
+    // 6. ROMANTIC TYPOGRAPHY & CAPTION
+    // ----------------------------------------------------
     const captionText = inputCardCaption.value.trim() || `Tác phẩm của ${crushData.crushName} ✨`;
-    targetCtx.fillStyle = '#0f172a';
-    targetCtx.font = `700 ${width * 0.046}px "Plus Jakarta Sans", sans-serif`;
+    
+    // Caption styling per theme
+    if (currentFrameTheme === 'white') {
+      targetCtx.fillStyle = '#1e293b';
+    } else if (currentFrameTheme === 'kraft') {
+      targetCtx.fillStyle = '#3e2723';
+    } else if (currentFrameTheme === 'pastel') {
+      targetCtx.fillStyle = '#581c87';
+    } else if (currentFrameTheme === 'film') {
+      targetCtx.fillStyle = '#f8fafc';
+    }
+
+    // Elegant handwritten font
+    targetCtx.font = `700 ${width * 0.052}px "Dancing Script", "Caveat", "Playfair Display", cursive, sans-serif`;
     targetCtx.textAlign = 'center';
     targetCtx.textBaseline = 'middle';
-    targetCtx.fillText(captionText, width / 2, height * 0.83);
+    
+    // Position caption slightly to the left if stamp is active, or centered
+    const captionX = currentStampStyle !== 'none' ? width * 0.44 : width / 2;
+    targetCtx.fillText(captionText, captionX, height * 0.835);
 
-    // Date & Signature
+    // Date & Signature Metadata
     const now = new Date();
-    const dateStr = `${now.getDate()}/${now.getMonth() + 1}/${now.getFullYear()} • Flower Studio`;
-    targetCtx.fillStyle = '#94a3b8';
-    targetCtx.font = `500 ${width * 0.028}px "Plus Jakarta Sans", sans-serif`;
-    targetCtx.fillText(dateStr, width / 2, height * 0.91);
+    const dateStr = `${now.getDate()}/${now.getMonth() + 1}/${now.getFullYear()} • Flower Studio 🌸`;
+    
+    if (currentFrameTheme === 'film') {
+      targetCtx.fillStyle = '#94a3b8';
+    } else if (currentFrameTheme === 'kraft') {
+      targetCtx.fillStyle = '#785438';
+    } else if (currentFrameTheme === 'pastel') {
+      targetCtx.fillStyle = '#a855f7';
+    } else {
+      targetCtx.fillStyle = '#94a3b8';
+    }
+
+    targetCtx.font = `500 ${width * 0.026}px "Plus Jakarta Sans", sans-serif`;
+    targetCtx.fillText(dateStr, captionX, height * 0.915);
   }
 
   function renderPolaroidCardPreview() {
