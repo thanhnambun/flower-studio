@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=3.0">
+  <link rel="stylesheet" href="style.css?v=14.0">
 </head>
 <body>
   <div class="app-container">
@@ -23,7 +23,7 @@
     <div class="ambient-glow glow-3"></div>
 
     <!-- Top Navigation / Header -->
-    <header class="top-nav glass-panel">
+    <header class="top-nav">
       <div class="brand">
         <!-- Mobile Sidebar Toggle Button -->
         <button class="mobile-controls-btn icon-btn" id="btn-mobile-controls" title="Mở bộ điều chỉnh hoa" aria-label="Mở bộ điều chỉnh hoa">
@@ -39,15 +39,12 @@
         </div>
 
         <div class="brand-text">
-          <div class="brand-title-row">
-            <h1 id="header-crush-title">Góc Sáng Tạo Của Cậu</h1>
-            <button class="badge-custom" id="btn-badge-name" title="Chỉnh sửa tên & ảnh">
-              <span class="sparkle">✨</span>
-              <span id="badge-crush-name">Dành Cho Cậu</span>
-              <span class="edit-pen">✏️</span>
-            </button>
-          </div>
-          <span class="sub-badge">Custom DIY Flower Studio 🎨</span>
+          <h1 id="header-crush-title">Góc Sáng Tạo</h1>
+          <button class="badge-custom" id="btn-badge-name" title="Chỉnh sửa tên & ảnh">
+            <span class="sparkle">✨</span>
+            <span id="badge-crush-name">Dành Cho Cậu</span>
+            <span class="edit-pen">✏️</span>
+          </button>
         </div>
       </div>
 
@@ -56,13 +53,13 @@
         <!-- Flower Fortune Button -->
         <button class="btn btn-fortune" id="btn-flower-fortune" title="Xem thông điệp may mắn & loài hoa hôm nay của cậu">
           <span class="fortune-icon">🔮</span>
-          <span class="btn-text">Bói Hoa Hôm Nay</span>
+          <span class="btn-text">Bói Hoa</span>
         </button>
 
         <!-- Surprise Bloom Show Button -->
         <button class="btn btn-surprise" id="btn-surprise-bloom" title="Một điều bất ngờ nhỏ tặng cậu!">
           <span class="surprise-icon">✨</span>
-          <span class="btn-text">Bất Ngờ Nhỏ</span>
+          <span class="btn-text">Bất Ngờ</span>
         </button>
 
         <!-- Secret Dev Note Button -->
@@ -74,12 +71,12 @@
 
         <!-- Relaxing Ambient Music Toggle -->
         <button class="icon-btn" id="btn-toggle-bgm" title="Bật/Tắt Nhạc thư giãn Lo-Fi">
-          <svg id="bgm-icon-on" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+          <svg id="bgm-icon-on" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M9 18V5l12-2v13"></path>
             <circle cx="6" cy="18" r="3"></circle>
             <circle cx="18" cy="16" r="3"></circle>
           </svg>
-          <svg id="bgm-icon-off" class="hidden" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+          <svg id="bgm-icon-off" class="hidden" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M9 18V5l12-2v13"></path>
             <circle cx="6" cy="18" r="3"></circle>
             <circle cx="18" cy="16" r="3"></circle>
@@ -89,12 +86,12 @@
 
         <!-- Falling Petals Rain Toggle -->
         <button class="icon-btn active-tint" id="btn-toggle-petals" title="Bật/Tắt Cánh Hoa Rơi">
-          <span style="font-size: 16px;">🌸</span>
+          <span style="font-size: 15px;">🌸</span>
         </button>
 
         <!-- Clear Canvas -->
         <button class="icon-btn" id="btn-clear-canvas" title="Xóa màn hình để vẽ lại">
-          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
             <polyline points="3 6 5 6 21 6"></polyline>
             <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
           </svg>
@@ -112,23 +109,27 @@
       </div>
     </header>
 
-    <!-- Mode Selector Tabs (Fixed Floating Bar) -->
+    <!-- Mode Selector Tabs (Independent Floating Dock: Top on Desktop, Bottom on Mobile) -->
     <div class="mode-tabs" id="main-mode-tabs">
       <button class="mode-tab active" data-mode="studio" id="btn-mode-studio">
         <span class="tab-icon">🎨</span>
-        <span>Tự Tay Thiết Kế</span>
+        <span class="tab-label-full">Tự Tay Thiết Kế</span>
+        <span class="tab-label-short">Thiết Kế</span>
       </button>
       <button class="mode-tab" data-mode="garden" id="btn-mode-garden">
         <span class="tab-icon">🌸</span>
-        <span>Khu Vườn Tự Do</span>
+        <span class="tab-label-full">Khu Vườn Tự Do</span>
+        <span class="tab-label-short">Vườn Hoa</span>
       </button>
       <button class="mode-tab" data-mode="brush" id="btn-mode-brush">
         <span class="tab-icon">🪄</span>
-        <span>Bút Vẽ Thần Kỳ</span>
+        <span class="tab-label-full">Bút Vẽ Thần Kỳ</span>
+        <span class="tab-label-short">Bút Vẽ</span>
       </button>
       <button class="mode-tab" data-mode="tutorial" id="btn-mode-tutorial">
         <span class="tab-icon">📖</span>
-        <span>Bí Kíp Vẽ Hoa</span>
+        <span class="tab-label-full">Bí Kíp Vẽ Hoa</span>
+        <span class="tab-label-short">Bí Kíp</span>
       </button>
     </div>
 

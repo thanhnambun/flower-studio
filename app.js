@@ -154,7 +154,7 @@ Mong là góc nhỏ này sẽ mang lại cho cậu một chút niềm vui và s�
     crushName: 'Cậu',
     avatarBase64: '',
     uploadedPhotoBase64: '',
-    gardenTitle: 'Góc Sáng Tạo Của Cậu ✨'
+    gardenTitle: 'Góc Sáng Tạo'
   };
 
   // Polaroid State
@@ -194,7 +194,9 @@ Mong là góc nhỏ này sẽ mang lại cho cậu một chút niềm vui và s�
   }
 
   function updateCrushUI() {
-    headerCrushTitle.textContent = crushData.gardenTitle;
+    let title = crushData.gardenTitle || 'Góc Sáng Tạo';
+    if (title.length > 14) title = 'Góc Sáng Tạo';
+    headerCrushTitle.textContent = title;
     badgeCrushName.textContent = `Dành Cho ${crushData.crushName}`;
     noteRecipientText.textContent = `Gửi ${crushData.crushName} Nhé ✨`;
     inputCardCaption.value = `Tác phẩm của ${crushData.crushName} ✨`;
